@@ -6,6 +6,7 @@ import Board from "./src/components/Board";
 export default function App() {
   return (
     <View style={styles.container}>
+      <Text style={styles.text}>Game Board</Text>
       <Board />
       <StatusBar style="auto" />
     </View>
@@ -15,8 +16,11 @@ export default function App() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "black",
     alignItems: "center",
     justifyContent: "center",
+  },
+  text: {
+    color: "white",
   },
 });

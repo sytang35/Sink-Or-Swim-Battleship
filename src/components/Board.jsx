@@ -13,24 +13,31 @@ export default function Board({}) {
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
     [null, null, null, null, null, null, null, null, null, null],
+    [null, null, null, null, null, null, null, null, null, null],
   ]);
 
   return (
-    <View style={{ flexDirection: "row", flexWrap: "wrap" }}>
+    <View style={styles.container}>
       {board.map((row, x) =>
-        row.map((col, y) => <View style={styles.grid}></View>)
+        row.map((col, y) => <View key={`${x}${y}`} style={styles.grid}></View>)
       )}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  container: {
+    flexDirection: "row",
+    flexWrap: "wrap",
+    justifyContent: "center",
+    paddingTop: 10,
+  },
   grid: {
-    width: 50,
-    height: 50,
+    width: 36,
+    height: 36,
     borderStyle: "solid",
     borderWidth: 1,
-    backgroundColor: "lightsalmon",
+    backgroundColor: "white",
     justifyContent: "center",
     alignItems: "center",
   },
