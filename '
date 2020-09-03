@@ -28,12 +28,23 @@ export default function Board({}) {
 
   // 12:39AM: Try using the Square component to handle coordinates
 
+  function onSelect(x, y) {
+    let status = "";
+    if (board[x][y] === "s4") {
+      status = "hit";
+      return status;
+    } else {
+      status = "miss";
+      return status;
+    }
+  }
+
   return (
     <View style={styles.container}>
       {board.map((row, x) =>
         row.map((col, y) => (
           <View key={`${x}${y + 1}`} style={styles.grid}>
-            <Square key={`${x}+${y}`} x={x} y={y} status={col} />
+            <Square key={`${x}+${y}`} x={x} y={y} onSelect={() => onSelect} />
           </View>
         ))
       )}
