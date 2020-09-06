@@ -1,17 +1,27 @@
-import React, { useState } from "react";
-import { View, Text, StyleSheet, TextComponent } from "react-native";
+import React, { useState, useContext, useEffect } from "react";
+import { View, Text, StyleSheet } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
+import PropTypes from "prop-types";
 
-export default function Square({ x, y, status }) {
+Square.propTypes = {
+  x: PropTypes.number,
+  y: PropTypes.number,
+  status: PropTypes.string,
+  //damageCounter: PropTypes.any,
+};
+
+let count = 0;
+export default function Square({ x, y, status, onPress }) {
   // Selecting square passes the x and y index values back to parent
 
   const [visible, setVisible] = useState(null);
   const [miss, setMiss] = useState(null);
+  //const [count, setCount] = useState(0);
 
+  //const dmg = useContext(damage);
+  //let
+  // Update state representing HIT or MISS
   const render = (x, y, status) => {
-    //if (status !== "miss" && status !== "hit") {
-    //console.log(x, y, status);
-    //}
     if (
       status === "s1" ||
       status === "s2" ||
@@ -19,19 +29,29 @@ export default function Square({ x, y, status }) {
       status === "s4"
     ) {
       setVisible(true);
+      console.log(x, y, status);
     } else if (status === null) {
       setMiss(true);
+      console.log(x, y, status);
     }
   };
+
+  // Render HIT
   const displayHit = () => {
-    return <Text>Hit</Text>;
+    return <Text style={styles.hit}>☠️</Text>;
   };
+
+  // Render MISS
   const displayMiss = () => {
-    return <Text>Miss</Text>;
+    return <Text style={styles.miss}>😱</Text>;
   };
-  //let { x, y, status, onClick } = this.props;
+
   return (
-    <TouchableNativeFeedback onPress={() => render(x, y, status)}>
+    <TouchableNativeFeedback
+      onPress={() => {
+        render(x, y, status);
+      }}
+    >
       <View style={styles.square}>
         {visible ? displayHit() : null}
         {miss ? displayMiss() : null}
@@ -45,5 +65,17 @@ const styles = StyleSheet.create({
     width: 40,
     height: 40,
     borderWidth: 1,
+  },
+  hit: {
+    width: 40,
+    height: 40,
+    fontSize: 25,
+    textAlign: "center",
+  },
+  miss: {
+    width: 40,
+    height: 40,
+    fontSize: 25,
+    textAlign: "center",
   },
 });
