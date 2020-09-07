@@ -5,10 +5,10 @@ import Board from "./src/components/Board";
 
 export default function App() {
   return (
-    <View style={styles.container}>
+    <>
       <Board />
       <StatusBar style="auto" />
-    </View>
+    </>
   );
 }
 

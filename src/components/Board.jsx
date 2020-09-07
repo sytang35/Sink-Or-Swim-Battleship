@@ -1,24 +1,15 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet } from "react-native";
+import { View, Text, StyleSheet, Button } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
+import { puzzle } from "../helper/puzzles";
 
 export default function Board() {
   // Initial state of board
-  const [board, setBoard] = useState(() => [
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, "s1", "s1", null, null, null, null, null, null, null],
-    [null, null, null, null, null, "s2", null, null, null, null],
-    [null, null, null, null, null, "s2", null, null, null, null],
-    [null, null, null, null, null, "s2", null, null, null, null],
-    [null, null, null, null, null, null, null, null, null, null],
-    [null, "s4", null, null, null, null, null, null, null, null],
-    [null, "s4", null, null, null, null, null, "s3", "s3", "s3"],
-    [null, "s4", null, null, null, null, null, null, null, null],
-    [null, "s4", null, null, null, null, null, null, null, null],
-  ]);
+  const [board, setBoard] = useState(() => puzzle);
+  const [end, setEnd] = useState(false);
 
-  // Count number of total ship HP
+  // Count number of total ship HP currently on board
   let count = 0;
   const totalHP = (board) => {
     for (let i = 0; i < board.length; i++) {
@@ -36,11 +27,31 @@ export default function Board() {
     return count;
   };
 
+  useEffect(() => {
+    if (count === 0) {
+      setEnd(true);
+    } else {
+      setEnd(false);
+    }
+  });
+
   // Update state representing HIT or MISS
   return (
-    <>
-      <View>
+    <View style={styles.screen}>
+      {end ? (
+        <View style={{ backgroundColor: "white" }}>
+          <Text>You win!</Text>
+        </View>
+      ) : null}
+
+      <View style={{ justifyContent: "space-evenly", flexDirection: "row" }}>
         <Text style={styles.hp}>Number of Targets: {totalHP(board)}</Text>
+        <Button
+          onPress={() => {
+            setBoard(() => puzzle);
+          }}
+          title="Reset"
+        ></Button>
       </View>
       <View style={styles.container}>
         {board.map((row, x) =>
@@ -85,24 +96,33 @@ export default function Board() {
           ))
         )}
       </View>
-    </>
+    </View>
   );
 }
 
 const styles = StyleSheet.create({
+  screen: {
+    flex: 1,
+    backgroundColor: "black",
+    alignItems: "center",
+    justifyContent: "center",
+  },
   container: {
     flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
+    alignItems: "center",
     paddingTop: 10,
   },
   hp: {
     color: "white",
     backgroundColor: "red",
-    width: "100%",
-    padding: 2,
     flexDirection: "row",
-    justifyContent: "flex-start",
+    justifyContent: "center",
+    alignItems: "center",
+    width: 85,
+    padding: 2,
+    marginRight: 250,
   },
   grid: {
     width: 40,
