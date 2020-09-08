@@ -27,6 +27,7 @@ export default function Board() {
     return count;
   };
 
+  // Win game condition state toggle
   useEffect(() => {
     if (count === 0) {
       setEnd(true);
