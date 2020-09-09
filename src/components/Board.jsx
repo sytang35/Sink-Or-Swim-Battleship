@@ -36,6 +36,41 @@ export default function Board() {
     }
   });
 
+  // Add game board axes
+  const boardRow = board.slice();
+
+  const yCol = (num) => {
+    let countY = 0;
+    for (let i = 0; i < num.length; i++) {
+      if (num[i] !== null && num[i] !== "miss") {
+        countY++;
+      }
+    }
+    return countY;
+  };
+
+  const xRow = () => {
+    let countX = 0;
+    let col = 0;
+    for (let i = 0; i < board.length; i++) {
+      if (board[i][col] !== null && board[i][col] !== "miss") {
+        countX++;
+      }
+    }
+    console.log("X axis", countX);
+    return (
+      <View
+        key={Math.random()}
+        style={{
+          color: "white",
+          paddingHorizontal: 90,
+        }}
+      >
+        <Text style={{ color: "white", fontSize: 35 }}>{countX}</Text>
+      </View>
+    );
+  };
+
   // Update state representing HIT or MISS
   return (
     <View style={styles.screen}>
@@ -44,7 +79,6 @@ export default function Board() {
           <Text>You win!</Text>
         </View>
       ) : null}
-
       <View style={{ justifyContent: "space-evenly", flexDirection: "row" }}>
         <Text style={styles.hp}>Number of Targets: {totalHP(board)}</Text>
         <Button
@@ -54,6 +88,28 @@ export default function Board() {
           title="Reset"
         ></Button>
       </View>
+      <View style={styles.gridY}>
+        {boardRow.map((row) => {
+          return (
+            <View
+              key={Math.random()}
+              style={{
+                color: "white",
+                paddingHorizontal: 90,
+              }}
+            >
+              <Text style={{ color: "white", fontSize: 35 }}>{yCol(row)}</Text>
+            </View>
+          );
+        })}
+      </View>
+
+      <View style={styles.gridX}>
+        {board.map(() => {
+          return xRow();
+        })}
+      </View>
+
       <View style={styles.container}>
         {board.map((row, x) =>
           row.map((col, y) => (
@@ -114,6 +170,18 @@ const styles = StyleSheet.create({
     justifyContent: "center",
     alignItems: "center",
     paddingTop: 10,
+    marginHorizontal: 15,
+  },
+  gridY: {
+    width: 250,
+    position: "absolute",
+    left: "-20%",
+    bottom: "18%",
+  },
+  gridX: {
+    width: 250,
+    flexDirection: "row",
+    justifyContent: "space-evenly",
   },
   hp: {
     color: "white",
@@ -126,8 +194,8 @@ const styles = StyleSheet.create({
     marginRight: 250,
   },
   grid: {
-    width: 40,
-    height: 40,
+    width: 45,
+    height: 45,
     borderStyle: "solid",
     borderWidth: 1,
     backgroundColor: "white",
