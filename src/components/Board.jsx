@@ -49,15 +49,13 @@ export default function Board() {
     return countY;
   };
 
-  const xRow = () => {
+  const xRow = (col) => {
     let countX = 0;
-    let col = 0;
     for (let i = 0; i < board.length; i++) {
       if (board[i][col] !== null && board[i][col] !== "miss") {
         countX++;
       }
     }
-    console.log("X axis", countX);
     return (
       <View
         key={Math.random()}
@@ -105,8 +103,8 @@ export default function Board() {
       </View>
 
       <View style={styles.gridX}>
-        {board.map(() => {
-          return xRow();
+        {board.map((row, i) => {
+          return xRow(i);
         })}
       </View>
 
