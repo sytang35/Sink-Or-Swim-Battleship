@@ -1,8 +1,11 @@
 import React, { useState } from "react";
-import { View, Text, StyleSheet, Button } from "react-native";
+import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
 import { puzzle, answer } from "../helper/puzzles";
+//import Marker from "../game-assets/captains_wheel.svg";
+//import SvgUri from "react-native-svg-uri";
+//import Svg, { Image } from "react-native-svg";
 
 export default function Board() {
   // Initial state of board
@@ -41,8 +44,8 @@ export default function Board() {
 
   const xRow = (col) => {
     let countX = 0;
-    for (let i = 0; i < board.length; i++) {
-      if (board[i][col] !== null && board[i][col] !== "miss") {
+    for (let i = 0; i < answer.length; i++) {
+      if (answer[i][col] !== null && answer[i][col] !== "miss") {
         countX++;
       }
     }
@@ -59,6 +62,7 @@ export default function Board() {
     );
   };
 
+  // Win and lose conditions
   const submit = (board) => {
     let question = board.slice();
     let solution = answer;
@@ -91,7 +95,7 @@ export default function Board() {
       </View>
 
       <View style={styles.gridY}>
-        {board.map((row) => {
+        {answer.map((row) => {
           return (
             <View
               key={Math.random()}
@@ -107,45 +111,30 @@ export default function Board() {
       </View>
 
       <View style={styles.gridX}>
-        {board.map((_, i) => {
+        {answer.map((_, i) => {
           return xRow(i);
         })}
       </View>
 
       <View style={styles.container}>
         {board.map((row, x) =>
-          row.map((col, y) => (
+          row.map((_, y) => (
             <View style={styles.grid} key={`${x}${y}`}>
               <TouchableNativeFeedback
                 key={`${x}${y + 1}`}
                 style={styles.grid}
                 onPress={() => {
-                  if (
-                    col === "s1" ||
-                    col === "s2" ||
-                    col === "s3" ||
-                    col === "s4"
-                  ) {
-                    const newBoard = produce(board, (copyBoard) => {
-                      copyBoard[x][y] =
-                        board[x][y] === "s1" ||
-                        board[x][y] === "s2" ||
-                        board[x][y] === "s3" ||
-                        board[x][y] === "s4"
-                          ? "hit"
-                          : null;
-                    });
-                    setBoard(newBoard);
-                  } else if (col === null) {
-                    const newBoard = produce(board, (copyBoard) => {
-                      copyBoard[x][y] = board[x][y] === null ? "miss" : null;
-                    });
-                    setBoard(newBoard);
-                  }
+                  const newBoard = produce(board, (copyBoard) => {
+                    copyBoard[x][y] = board[x][y] ? null : "ship";
+                  });
+                  setBoard(newBoard);
                 }}
               >
-                {board[x][y] === "hit" ? (
-                  <Text style={styles.hit}>hit</Text>
+                {board[x][y] === "ship" ? (
+                  <Image
+                    style={styles.hit}
+                    source={require("../game-assets/battleship.png")}
+                  ></Image>
                 ) : null}
                 {board[x][y] === "miss" ? (
                   <Text style={styles.miss}>miss</Text>
@@ -215,9 +204,9 @@ const styles = StyleSheet.create({
   hit: {
     width: 40,
     height: 40,
-    fontSize: 25,
-    textAlign: "center",
-    backgroundColor: "red",
+    //fontSize: 25,
+    //textAlign: "center",
+    //backgroundColor: "red",
   },
   miss: {
     width: 40,
