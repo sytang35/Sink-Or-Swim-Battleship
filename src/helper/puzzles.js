@@ -12,3 +12,14 @@ export const puzzle = [
   ["s4", null, null, null, null, null, null, null],
   ["s4", null, null, null, null, null, null, null],
 ];
+
+export const answer = [
+  ["hit", "hit", null, null, null, null, null, null],
+  [null, null, null, null, "hit", null, null, null],
+  [null, null, null, null, "hit", null, null, null],
+  [null, null, null, null, "hit", null, null, null],
+  ["hit", null, null, null, null, null, null, null],
+  ["hit", null, null, null, null, "hit", "hit", "hit"],
+  ["hit", null, null, null, null, null, null, null],
+  ["hit", null, null, null, null, null, null, null],
+];

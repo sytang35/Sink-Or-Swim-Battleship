@@ -1,13 +1,13 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Button } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
-import { puzzle } from "../helper/puzzles";
+import { puzzle, answer } from "../helper/puzzles";
 
 export default function Board() {
   // Initial state of board
   const [board, setBoard] = useState(() => puzzle);
-  const [end, setEnd] = useState(false);
+  const [end, setEnd] = useState(null);
 
   // Count number of total ship HP currently on board
   let count = 0;
@@ -27,17 +27,7 @@ export default function Board() {
     return count;
   };
 
-  // Win game condition state toggle
-  useEffect(() => {
-    if (count === 0) {
-      setEnd(true);
-    } else {
-      setEnd(false);
-    }
-  });
-
   // Add game board axes
-  const boardRow = board.slice();
 
   const yCol = (num) => {
     let countY = 0;
@@ -69,25 +59,39 @@ export default function Board() {
     );
   };
 
+  const submit = (board) => {
+    let question = board.slice();
+    let solution = answer;
+
+    for (let i = 0; i < solution.length; i++) {
+      for (let k = 0; k < solution[i].length; k++) {
+        if (question[i][k] !== solution[i][k]) {
+          setEnd(false);
+          return false;
+        }
+      }
+    }
+    setEnd(true);
+  };
+
   // Update state representing HIT or MISS
   return (
     <View style={styles.screen}>
-      {end ? (
-        <View style={{ backgroundColor: "white" }}>
-          <Text>You win!</Text>
-        </View>
-      ) : null}
+      {end === true ? <Text style={{ color: "white" }}>You win</Text> : null}
+      {end === false ? <Text style={{ color: "white" }}>Try again</Text> : null}
       <View style={{ justifyContent: "space-evenly", flexDirection: "row" }}>
         <Text style={styles.hp}>Number of Targets: {totalHP(board)}</Text>
         <Button
           onPress={() => {
             setBoard(() => puzzle);
+            setEnd(null);
           }}
           title="Reset"
         ></Button>
       </View>
+
       <View style={styles.gridY}>
-        {boardRow.map((row) => {
+        {board.map((row) => {
           return (
             <View
               key={Math.random()}
@@ -103,7 +107,7 @@ export default function Board() {
       </View>
 
       <View style={styles.gridX}>
-        {board.map((row, i) => {
+        {board.map((_, i) => {
           return xRow(i);
         })}
       </View>
@@ -151,6 +155,14 @@ export default function Board() {
           ))
         )}
       </View>
+      <View style={{ marginTop: 20 }}>
+        <Button
+          onPress={() => {
+            submit(board);
+          }}
+          title="Submit"
+        ></Button>
+      </View>
     </View>
   );
 }
@@ -167,17 +179,17 @@ const styles = StyleSheet.create({
     flexWrap: "wrap",
     justifyContent: "center",
     alignItems: "center",
-    paddingTop: 10,
+    marginTop: 10,
     marginHorizontal: 15,
   },
   gridY: {
-    width: 250,
+    width: 230,
     position: "absolute",
     left: "-20%",
-    bottom: "18%",
+    bottom: "22%",
   },
   gridX: {
-    width: 250,
+    width: 200,
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
