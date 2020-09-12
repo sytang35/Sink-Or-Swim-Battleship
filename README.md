@@ -1,5 +1,5 @@
 # Sink-Or-Swim-Battleship
-BrainStation Capstone Project using React Native and React Hooks. Currently under development - estimated completion date is Sept 14.
+A simple variation of Battleship Solitaire and Multiplayer Battleship using React Native and React Hooks. Currently under development - estimated completion date is Sept 14.
 
 To run application, run `npm install` to have the required dependencies and then `npm start` or `expo start`. The app is currently being developed using an Android Emulator (Pixel 3a) and may vary on iOS.
 
