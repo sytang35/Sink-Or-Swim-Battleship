@@ -1,34 +1,15 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
 import { puzzle, answer } from "../helper/puzzles";
-//import Marker from "../game-assets/captains_wheel.svg";
-//import SvgUri from "react-native-svg-uri";
-//import Svg, { Image } from "react-native-svg";
+import AsyncStorage from "@react-native-community/async-storage";
+import { useFocusEffect } from "@react-navigation/native";
 
 export default function Board() {
   // Initial state of board
   const [board, setBoard] = useState(() => puzzle);
   const [end, setEnd] = useState(null);
-
-  // Count number of total ship HP currently on board
-  let count = 0;
-  const totalHP = (board) => {
-    for (let i = 0; i < board.length; i++) {
-      for (let k = 0; k < board[i].length; k++) {
-        if (
-          board[i][k] === "s1" ||
-          board[i][k] === "s2" ||
-          board[i][k] === "s3" ||
-          board[i][k] === "s4"
-        ) {
-          count++;
-        }
-      }
-    }
-    return count;
-  };
 
   // Add game board axes
 
@@ -78,16 +59,32 @@ export default function Board() {
     setEnd(true);
   };
 
+  // Get saved state when screen is in focus
+  useFocusEffect(
+    useCallback(() => {
+      AsyncStorage.getItem("game_state")
+        .then((response) => {
+          if (response) {
+            setBoard(JSON.parse(response));
+          }
+          return response;
+        })
+        .catch((error) => {
+          console.log(error);
+        });
+    })
+  );
+
   // Update state representing HIT or MISS
   return (
     <View style={styles.screen}>
       {end === true ? <Text style={{ color: "white" }}>You win</Text> : null}
       {end === false ? <Text style={{ color: "white" }}>Try again</Text> : null}
       <View style={{ justifyContent: "space-evenly", flexDirection: "row" }}>
-        <Text style={styles.hp}>Number of Targets: {totalHP(board)}</Text>
         <Button
           onPress={() => {
             setBoard(() => puzzle);
+            AsyncStorage.setItem("game_state", JSON.stringify(puzzle));
             setEnd(null);
           }}
           title="Reset"
@@ -128,6 +125,7 @@ export default function Board() {
                     copyBoard[x][y] = board[x][y] ? null : "ship";
                   });
                   setBoard(newBoard);
+                  AsyncStorage.setItem("game_state", JSON.stringify(newBoard));
                 }}
               >
                 {board[x][y] === "ship" ? (
@@ -182,16 +180,6 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     justifyContent: "space-evenly",
   },
-  hp: {
-    color: "white",
-    backgroundColor: "red",
-    flexDirection: "row",
-    justifyContent: "center",
-    alignItems: "center",
-    width: 85,
-    padding: 2,
-    marginRight: 250,
-  },
   grid: {
     width: 45,
     height: 45,
@@ -204,9 +192,6 @@ const styles = StyleSheet.create({
   hit: {
     width: 40,
     height: 40,
-    //fontSize: 25,
-    //textAlign: "center",
-    //backgroundColor: "red",
   },
   miss: {
     width: 40,
