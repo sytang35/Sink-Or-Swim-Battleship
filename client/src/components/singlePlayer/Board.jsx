@@ -2,7 +2,7 @@ import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
-import { puzzle, answer } from "../helper/puzzles";
+import { puzzle, answer } from "../../helper/puzzles";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
 
@@ -59,7 +59,7 @@ export default function Board() {
     setEnd(true);
   };
 
-  // Get saved state when screen is in focus
+  // Get last saved state when screen is in focus
   useFocusEffect(
     useCallback(() => {
       AsyncStorage.getItem("game_state")
@@ -131,7 +131,7 @@ export default function Board() {
                 {board[x][y] === "ship" ? (
                   <Image
                     style={styles.hit}
-                    source={require("../game-assets/battleship.png")}
+                    source={require("../../game-assets/battleship.png")}
                   ></Image>
                 ) : null}
                 {board[x][y] === "miss" ? (

@@ -35,19 +35,28 @@ export default function MainMenu({ navigation }) {
       <TouchableNativeFeedback
         style={styles.button}
         onPress={() => {
-          navigation.navigate("Game");
+          navigation.navigate("Single Player");
         }}
       >
-        <Text style={styles.text}>Solitary Mode</Text>
+        <Text style={styles.text}>Single Player</Text>
       </TouchableNativeFeedback>
 
       <TouchableNativeFeedback
         style={styles.button}
         onPress={() => {
-          navigation.navigate("");
+          navigation.navigate("Multiplayer");
         }}
       >
         <Text style={styles.text}>Multiplayer (Under Construction)</Text>
+      </TouchableNativeFeedback>
+
+      <TouchableNativeFeedback
+        style={styles.button}
+        onPress={() => {
+          navigation.navigate("Chat");
+        }}
+      >
+        <Text style={styles.text}>Chat (Under Construction)</Text>
       </TouchableNativeFeedback>
     </View>
   );
