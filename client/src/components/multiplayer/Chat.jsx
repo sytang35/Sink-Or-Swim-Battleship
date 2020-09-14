@@ -14,15 +14,17 @@ class Chat extends React.Component {
   }
 
   componentDidMount() {
-    //this.socket = io("http://127.0.0.1:3000");
-    this.socket = io("http://192.168.100.110:3000");
+    this.socket = io("http://192.168.100.110:8080");
     this.socket.on("response", (msg) => {
       this.setState({ chatMessages: [...this.state.chatMessages, msg] });
     });
   }
   render() {
     const chatMessages = this.state.chatMessages.map((chatMessage) => (
-      <Text style={{ borderWidth: 2, top: 200, justifyContent: "center" }}>
+      <Text
+        key={Math.random()}
+        style={{ borderWidth: 2, top: 200, justifyContent: "center" }}
+      >
         {chatMessage}
       </Text>
     ));

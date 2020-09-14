@@ -4,17 +4,17 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import { puzzle } from "../../helper/puzzles";
 import produce from "immer";
-import { url } from "./serverURL.js";
+import { url2 } from "./serverURL.js";
 
 export default function Game() {
   const [board, setBoard] = useState(() => puzzle);
 
-  const socket = io(url);
+  const socket = io(url2);
 
   useEffect(() => {
     socket.on("response", (response) => {
       setBoard(response);
-      console.log(response);
+      //console.log(response);
     });
   });
 
