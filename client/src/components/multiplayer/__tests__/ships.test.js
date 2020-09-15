@@ -1,4 +1,4 @@
-import Ships from "../factory/Ships";
+import Ships from "../factory/ships";
 
 // Test if the ship factory function is valid before implementing into React Native
 

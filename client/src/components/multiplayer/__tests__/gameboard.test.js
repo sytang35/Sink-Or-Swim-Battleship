@@ -1,5 +1,5 @@
-import Gameboard from "../factory/Gameboard";
-import Ships from "../factory/Ships";
+import Gameboard from "../factory/gameboard";
+import Ships from "../factory/ships";
 
 test("Can create a 10x10 board", () => {
   let board = Array(10)
@@ -95,6 +95,7 @@ test("Game over?", () => {
   const board = Gameboard();
   board.setPiece(Ships("submarine"), [0, 0]);
   board.setPiece(Ships("cruiser"), [0, 3]);
+  board.setPiece(Ships("battleship"), [2, 3]);
 
   board.receiveAttack([0, 0]);
   board.receiveAttack([0, 1]);
@@ -104,7 +105,13 @@ test("Game over?", () => {
   board.receiveAttack([0, 4]);
   board.receiveAttack([0, 5]);
 
-  console.log(board.getBoard());
+  board.receiveAttack([2, 3]);
+  board.receiveAttack([2, 4]);
+  board.receiveAttack([2, 5]);
+  board.receiveAttack([2, 6]);
+  board.receiveAttack([2, 7]);
+
+  //console.log(board.getBoard());
   let gameStatus = board.gameOver();
   expect(gameStatus).toBe(true);
 });

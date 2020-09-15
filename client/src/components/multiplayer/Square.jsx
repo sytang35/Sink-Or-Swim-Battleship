@@ -1,60 +1,42 @@
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
 
 Square.propTypes = {
-  x: PropTypes.number,
-  y: PropTypes.number,
-  status: PropTypes.string,
-  //damageCounter: PropTypes.any,
+  position: PropTypes.array,
+  gridVal: PropTypes.object,
+  onPress: PropTypes.func,
 };
 
-let count = 0;
-export default function Square({ x, y, status, onPress }) {
-  // Selecting square passes the x and y index values back to parent
+export default function Square({ position, gridVal, onPress }) {
+  // onPress needs to pass position and handle the check
 
-  const [visible, setVisible] = useState(null);
-  const [miss, setMiss] = useState(null);
-  //const [count, setCount] = useState(0);
+  const isOccupied = gridVal.isEmpty ? false : true;
+  const isSelected = gridVal.isSelected ? true : false;
 
-  //const dmg = useContext(damage);
-  //let
-  // Update state representing HIT or MISS
-  const render = (x, y, status) => {
-    if (
-      status === "s1" ||
-      status === "s2" ||
-      status === "s3" ||
-      status === "s4"
-    ) {
-      setVisible(true);
-      console.log(x, y, status);
-    } else if (status === null) {
-      setMiss(true);
-      console.log(x, y, status);
-    }
-  };
-
-  // Render HIT
-  const displayHit = () => {
-    return <Text style={styles.hit}>☠️</Text>;
-  };
-
-  // Render MISS
-  const displayMiss = () => {
-    return <Text style={styles.miss}>😱</Text>;
-  };
-
+  let value = "";
+  if (isSelected && isOccupied) {
+    value = (
+      <View>
+        <Text>X</Text>;
+      </View>
+    );
+  } else if (isSelected && !isOccupied) {
+    value = (
+      <View>
+        <Text>X</Text>;
+      </View>
+    );
+  }
   return (
     <TouchableNativeFeedback
       onPress={() => {
-        render(x, y, status);
+        onPress(position);
       }}
     >
       <View style={styles.square}>
-        {visible ? displayHit() : null}
-        {miss ? displayMiss() : null}
+        <Text>{value}</Text>
       </View>
     </TouchableNativeFeedback>
   );
