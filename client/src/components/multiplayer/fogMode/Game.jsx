@@ -2,12 +2,12 @@ import React, { useState, useEffect } from "react";
 import io from "socket.io-client";
 import { View, Text, StyleSheet, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
-import { puzzle } from "../../../helper/puzzles";
+import { battlefield } from "../../../helper/fog";
 import produce from "immer";
 import { url2 } from "../serverURL.js";
 
 export default function Game() {
-  const [board, setBoard] = useState(() => puzzle);
+  const [board, setBoard] = useState(() => battlefield);
 
   const socket = io(url2);
 
