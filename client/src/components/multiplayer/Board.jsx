@@ -7,9 +7,10 @@ Board.propTypes = {
   player: PropTypes.string,
   board: PropTypes.array,
   turn: PropTypes.bool,
+  onPress: PropTypes.func,
 };
 
-function Board({ player, board, turn }) {
+function Board({ player, board, turn, onPress }) {
   return (
     <View style={styles.grid}>
       {board.map((row, x) =>
@@ -17,7 +18,9 @@ function Board({ player, board, turn }) {
           return (
             <Square
               key={Math.random()}
-              //onPress={handle}
+              onPress={onPress}
+              player={player}
+              turn={turn}
               position={[x, y]}
               gridVal={col}
             />

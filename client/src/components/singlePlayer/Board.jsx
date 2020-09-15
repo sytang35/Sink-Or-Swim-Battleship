@@ -78,18 +78,19 @@ export default function Board() {
   // Update state representing HIT or MISS
   return (
     <View style={styles.screen}>
-      {end === true ? <Text style={{ color: "white" }}>You win</Text> : null}
-      {end === false ? <Text style={{ color: "white" }}>Try again</Text> : null}
-      <View style={{ justifyContent: "space-evenly", flexDirection: "row" }}>
-        <Button
-          onPress={() => {
-            setBoard(() => puzzle);
-            AsyncStorage.setItem("game_state", JSON.stringify(puzzle));
-            setEnd(null);
-          }}
-          title="Reset"
-        ></Button>
-      </View>
+      {end === true ? (
+        <View style={styles.gameOver}>
+          <Text style={styles.gameText}>You win</Text>
+        </View>
+      ) : null}
+      {end === false ? (
+        <View style={styles.gameOver}>
+          <Text style={styles.gameText}>Try again</Text>
+        </View>
+      ) : null}
+      <View
+        style={{ justifyContent: "space-evenly", flexDirection: "row" }}
+      ></View>
 
       <View style={styles.gridY}>
         {answer.map((row) => {
@@ -142,12 +143,22 @@ export default function Board() {
           ))
         )}
       </View>
-      <View style={{ marginTop: 20 }}>
+      <View
+        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 10 }}
+      >
         <Button
           onPress={() => {
             submit(board);
           }}
           title="Submit"
+        ></Button>
+        <Button
+          onPress={() => {
+            setBoard(() => puzzle);
+            AsyncStorage.setItem("game_state", JSON.stringify(puzzle));
+            setEnd(null);
+          }}
+          title="Reset"
         ></Button>
       </View>
     </View>
@@ -199,5 +210,17 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     backgroundColor: "gray",
+  },
+  gameOver: {
+    padding: 30,
+    position: "absolute",
+    zIndex: 10,
+    top: "0%",
+    backgroundColor: "lightskyblue",
+    borderRadius: 15,
+  },
+  gameText: {
+    color: "white",
+    fontSize: 35,
   },
 });

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
@@ -17,17 +17,9 @@ export default function Square({ position, gridVal, onPress }) {
 
   let value = "";
   if (isSelected && isOccupied) {
-    value = (
-      <View>
-        <Text>X</Text>;
-      </View>
-    );
+    value = <Text>X</Text>;
   } else if (isSelected && !isOccupied) {
-    value = (
-      <View>
-        <Text>X</Text>;
-      </View>
-    );
+    value = <Text>O</Text>;
   }
   return (
     <TouchableNativeFeedback
