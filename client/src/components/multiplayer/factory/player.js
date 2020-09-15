@@ -1,5 +1,5 @@
 import Board from "./gameboard";
-//import Ships from "./ships";
+import Ships from "./ships";
 
 export default function Player(player) {
   // Destructure props from imported functions
@@ -33,6 +33,13 @@ export default function Player(player) {
     );
     return game;
   }
+  function placeShips() {
+    setPiece(Ships("carrier"), [0, 0]);
+    setPiece(Ships("battleship"), [1, 1]);
+    setPiece(Ships("cruiser"), [2, 2]);
+    setPiece(Ships("submarine"), [3, 3]);
+    setPiece(Ships("destroyer"), [4, 4]);
+  }
 
   return {
     getBoard,
@@ -44,5 +51,6 @@ export default function Player(player) {
     fire,
     user,
     checkPlay,
+    placeShips,
   };
 }

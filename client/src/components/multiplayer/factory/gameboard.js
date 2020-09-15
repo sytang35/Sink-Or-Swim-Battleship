@@ -58,6 +58,10 @@ export default function Gameboard() {
       let ship = placedShip[square.shipIndex];
       ship.hit(square.shipBodyPosition);
 
+      board[row][col] = {
+        isEmpty: false,
+        isSelected: true,
+      };
       // Call sunk function to check if ship is sunk
       ship.isSunk();
     } else {
