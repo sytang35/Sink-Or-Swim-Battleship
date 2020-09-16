@@ -2,16 +2,17 @@ import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
-import { puzzle, answer, answer2, answer3 } from "../../helper/puzzles";
+import { puzzle } from "../../helper/puzzles";
 import AsyncStorage from "@react-native-community/async-storage";
-import { useFocusEffect } from "@react-navigation/native";
+//import { useFocusEffect } from "@react-navigation/native";
 import PropTypes from "prop-types";
 
 Board.propTypes = {
   difficulty: PropTypes.array,
+  mode: PropTypes.string,
 };
 
-export default function Board({ difficulty }) {
+export default function Board({ difficulty, mode }) {
   // Initial state of board
   const [board, setBoard] = useState(() => puzzle);
   const [end, setEnd] = useState(null);
@@ -64,27 +65,39 @@ export default function Board({ difficulty }) {
     setEnd(true);
   };
 
-  // Get last saved state when screen is in focus
-  useFocusEffect(
-    useCallback(() => {
-      AsyncStorage.getItem("game_state")
-        .then((response) => {
-          if (response) {
-            setBoard(JSON.parse(response));
-          }
-          return response;
-        })
-        .catch((error) => {
-          console.log(error);
-        });
-    })
-  );
+  const saveGame = () => {
+    if (mode === "easy") {
+      AsyncStorage.setItem("easy", JSON.stringify(board));
+    } else if (mode === "medium") {
+      AsyncStorage.setItem("medium", JSON.stringify(board));
+    } else {
+      AsyncStorage.setItem("hard", JSON.stringify(board));
+    }
+  };
+  const loadGame = () => {
+    if (mode === "easy") {
+      AsyncStorage.getItem("easy").then((response) => {
+        setBoard(JSON.parse(response));
+      });
+    } else if (mode === "medium") {
+      AsyncStorage.getItem("medium").then((response) => {
+        setBoard(JSON.parse(response));
+      });
+    } else {
+      AsyncStorage.getItem("hard").then((response) => {
+        setBoard(JSON.parse(response));
+      });
+    }
+    if (board === null) {
+      setBoard(puzzle);
+    }
+  };
 
   // Update state representing HIT or MISS
   return (
     <View style={styles.screen}>
       {end === true ? (
-        <View style={styles.gameOver}>
+        <View style={styles.gameWin}>
           <Text style={styles.gameText}>You win</Text>
         </View>
       ) : null}
@@ -131,7 +144,7 @@ export default function Board({ difficulty }) {
                     copyBoard[x][y] = board[x][y] ? null : "ship";
                   });
                   setBoard(newBoard);
-                  AsyncStorage.setItem("game_state", JSON.stringify(newBoard));
+                  //AsyncStorage.setItem("game_state", JSON.stringify(newBoard));
                 }}
               >
                 {board[x][y] === "ship" ? (
@@ -160,10 +173,34 @@ export default function Board({ difficulty }) {
         <Button
           onPress={() => {
             setBoard(() => puzzle);
-            AsyncStorage.setItem("game_state", JSON.stringify(puzzle));
             setEnd(null);
           }}
           title="Reset"
+        ></Button>
+
+        <Button
+          onPress={() => {
+            saveGame();
+            //AsyncStorage.setItem("game_state", JSON.stringify(board));
+          }}
+          title="Save"
+        ></Button>
+
+        <Button
+          onPress={() => {
+            loadGame();
+            //AsyncStorage.getItem("game_state")
+            //.then((response) => {
+            //if (response) {
+            //setBoard(JSON.parse(response));
+            //}
+            //return response;
+            //})
+            //.catch((error) => {
+            //console.log(error);
+            //});
+          }}
+          title="Load"
         ></Button>
       </View>
     </View>
@@ -217,11 +254,19 @@ const styles = StyleSheet.create({
     textAlign: "center",
     backgroundColor: "gray",
   },
-  gameOver: {
+  gameWin: {
     padding: 30,
     position: "absolute",
     zIndex: 10,
     top: "40%",
+    backgroundColor: "gray",
+    borderRadius: 15,
+  },
+  gameOver: {
+    padding: 30,
+    position: "absolute",
+    zIndex: 10,
+    top: "10%",
     backgroundColor: "gray",
     borderRadius: 15,
   },

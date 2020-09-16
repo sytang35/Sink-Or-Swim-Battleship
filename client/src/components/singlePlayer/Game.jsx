@@ -7,9 +7,9 @@ export default function Game(difficulty) {
 
   return (
     <>
-      {mode === "easy" ? <Board difficulty={answer} /> : null}
-      {mode === "medium" ? <Board difficulty={answer2} /> : null}
-      {mode === "hard" ? <Board difficulty={answer3} /> : null}
+      {mode === "easy" ? <Board difficulty={answer} mode={mode} /> : null}
+      {mode === "medium" ? <Board difficulty={answer2} mode={mode} /> : null}
+      {mode === "hard" ? <Board difficulty={answer3} mode={mode} /> : null}
     </>
   );
 }
