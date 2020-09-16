@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import io, { Socket } from "socket.io-client";
+import io from "socket.io-client";
 import { View, StyleSheet, Button, Text } from "react-native";
-import { url } from "./serverURL.js";
+import { url } from "../serverURL";
 import Board from "./Board";
-import Player from "./factory/player";
+import Player from "../factory/player";
 //import Fleet from "./Fleet.jsx";
 
 export default function Game() {
