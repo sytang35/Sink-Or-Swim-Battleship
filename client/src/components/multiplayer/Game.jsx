@@ -1,32 +1,44 @@
 import React, { useState, useEffect } from "react";
-import io from "socket.io-client";
-import { View, StyleSheet, Button } from "react-native";
-import { url2 } from "./serverURL.js";
+import io, { Socket } from "socket.io-client";
+import { View, StyleSheet, Button, Text } from "react-native";
+import { url } from "./serverURL.js";
 import Board from "./Board";
 import Player from "./factory/player";
 //import Fleet from "./Fleet.jsx";
 
 export default function Game() {
+  const [player1, setPlayer1] = useState(Player("1"));
+  const [player2, setPlayer2] = useState(Player("0"));
+  const [turn, setTurn] = useState();
+  const [board1, setBoard1] = useState(() => player1.getBoard());
+  const [board2, setBoard2] = useState(() => player2.getBoard());
+
+  // Currently using preset placement
+  //const [ship, setShip] = useState(false);
+  const [gameOver, setGameOver] = useState(false);
   // Socket handlers
-  const socket = io(url2);
+  const socket = io(url);
+
   useEffect(() => {
-    socket.on("player-connected", (move) => {
-      return move;
-      //setBoard(response);
+    socket.on("actuate", (move) => {
+      if (move.playerIndex === 1) {
+        //setBoard1(move.board);
+        setBoard1(player1.getBoard());
+      } else {
+        //setBoard2(move.board);
+        setBoard2(player2.getBoard());
+      }
     });
-  }, []);
-  const sendMove = (board, metadata) => {
-    //socket.emit("response", board);
-    if (!player2) {
-      socket.emit("actuate", { board, metadata });
+  });
+  const sendRemoteMove = (board) => {
+    if (!player1) {
+      socket.emit("response", { board });
     }
   };
-
-  const [player1, setPlayer1] = useState(Player("p1"));
-  const [player2, setPlayer2] = useState(Player("p2"));
-  const [turn, setTurn] = useState();
-  const [ship, setShip] = useState(false);
-  const [gameOver, setGameOver] = useState(false);
+  const handleRemote = (move) => {
+    const board = move.board;
+    setBoard2(board);
+  };
 
   // Alternate turns
   const endTurn = (prev) => {
@@ -40,13 +52,11 @@ export default function Game() {
     setPlayer2(player2);
     endTurn(player1);
     // Send move at end of turn
-    sendMove();
   };
   const player2Attack = (position) => {
     player1.receiveAttack(position);
     setPlayer1(player1);
     endTurn(player2);
-    sendMove();
   };
   const autoSet = () => {
     player1.placeShips();
@@ -64,18 +74,12 @@ export default function Game() {
   return (
     <View style={styles.container}>
       <View style={styles.board}>
-        <Board
-          board={player1.getBoard()}
-          player={player1.user}
-          onPress={player2Attack}
-        />
+        <Text>Player1</Text>
+        <Board board={board1} player={player1.user} onPress={player2Attack} />
       </View>
-      <View>
-        <Board
-          board={player2.getBoard()}
-          player={player2.user}
-          onPress={player1Attack}
-        />
+      <View style={styles.board}>
+        <Text>Player2</Text>
+        <Board board={board2} player={player2.user} onPress={player1Attack} />
       </View>
       <Button title="Start" onPress={start}></Button>
       <Button title="Restart" onPress={restart}></Button>

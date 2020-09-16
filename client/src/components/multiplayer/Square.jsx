@@ -39,14 +39,14 @@ export default function Square({ position, gridVal, onPress }) {
 
 const styles = StyleSheet.create({
   square: {
-    width: 30,
-    height: 30,
+    width: 27,
+    height: 27,
     borderWidth: 1,
   },
   hit: {
-    width: 40,
-    height: 40,
-    fontSize: 25,
+    width: 30,
+    height: 30,
+    fontSize: 20,
     textAlign: "center",
     backgroundColor: "pink",
   },

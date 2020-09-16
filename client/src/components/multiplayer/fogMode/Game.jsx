@@ -4,23 +4,22 @@ import { View, Text, StyleSheet, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import { battlefield } from "../../../helper/fog";
 import produce from "immer";
-import { url2 } from "../serverURL.js";
+import { url, url2 } from "../serverURL.js";
 
 export default function Game() {
   const [board, setBoard] = useState(() => battlefield);
 
-  const socket = io(url2);
+  const socket = io.connect(url);
 
   useEffect(() => {
-    socket.on("response", (response) => {
+    socket.on("actuate", (response) => {
       setBoard(response);
-      //console.log(response);
     });
   });
 
   const sendMove = (board) => {
-    socket.emit("response", board);
-    //setBoard(board);
+    socket.emit("actuate", board);
+    setBoard(board);
   };
 
   return (
@@ -46,7 +45,7 @@ export default function Game() {
                 {board[x][y] === "ship" ? (
                   <Image
                     style={styles.hit}
-                    source={require("../../game-assets/battleship.png")}
+                    source={require("../../../game-assets/battleship.png")}
                   ></Image>
                 ) : null}
                 {board[x][y] === "miss" ? (
