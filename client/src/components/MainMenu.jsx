@@ -44,7 +44,7 @@ export default function MainMenu({ navigation }) {
       <TouchableNativeFeedback
         style={styles.button}
         onPress={() => {
-          navigation.navigate("Multiplayer");
+          navigation.navigate("MultiModes");
         }}
       >
         <Text style={styles.text}>Multiplayer (Under Construction)</Text>
@@ -66,7 +66,6 @@ const styles = StyleSheet.create({
   container: {
     justifyContent: "center",
     alignItems: "center",
-    //flex: 0.5,
     flex: 1,
     backgroundColor: "cornflowerblue",
   },

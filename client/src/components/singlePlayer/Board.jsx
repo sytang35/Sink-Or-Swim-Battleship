@@ -2,11 +2,16 @@ import React, { useState, useCallback } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
-import { puzzle, answer } from "../../helper/puzzles";
+import { puzzle, answer, answer2, answer3 } from "../../helper/puzzles";
 import AsyncStorage from "@react-native-community/async-storage";
 import { useFocusEffect } from "@react-navigation/native";
+import PropTypes from "prop-types";
 
-export default function Board() {
+Board.propTypes = {
+  difficulty: PropTypes.array,
+};
+
+export default function Board({ difficulty }) {
   // Initial state of board
   const [board, setBoard] = useState(() => puzzle);
   const [end, setEnd] = useState(null);
@@ -25,8 +30,8 @@ export default function Board() {
 
   const xRow = (col) => {
     let countX = 0;
-    for (let i = 0; i < answer.length; i++) {
-      if (answer[i][col] !== null && answer[i][col] !== "miss") {
+    for (let i = 0; i < difficulty.length; i++) {
+      if (difficulty[i][col] !== null && difficulty[i][col] !== "miss") {
         countX++;
       }
     }
@@ -46,7 +51,7 @@ export default function Board() {
   // Win and lose conditions
   const submit = (board) => {
     let question = board.slice();
-    let solution = answer;
+    let solution = difficulty;
 
     for (let i = 0; i < solution.length; i++) {
       for (let k = 0; k < solution[i].length; k++) {
@@ -93,7 +98,7 @@ export default function Board() {
       ></View>
 
       <View style={styles.gridY}>
-        {answer.map((row) => {
+        {difficulty.map((row) => {
           return (
             <View
               key={Math.random()}
@@ -109,7 +114,7 @@ export default function Board() {
       </View>
 
       <View style={styles.gridX}>
-        {answer.map((_, i) => {
+        {difficulty.map((_, i) => {
           return xRow(i);
         })}
       </View>
@@ -144,7 +149,7 @@ export default function Board() {
         )}
       </View>
       <View
-        style={{ marginTop: 20, flexDirection: "row", paddingHorizontal: 10 }}
+        style={{ marginTop: 10, flexDirection: "row", paddingHorizontal: 10 }}
       >
         <Button
           onPress={() => {
@@ -184,19 +189,20 @@ const styles = StyleSheet.create({
     width: 230,
     position: "absolute",
     left: "-20%",
-    bottom: "22%",
+    bottom: "22.5%",
   },
   gridX: {
     width: 200,
     flexDirection: "row",
     justifyContent: "space-evenly",
+    marginBottom: 20,
   },
   grid: {
     width: 45,
     height: 45,
     borderStyle: "solid",
     borderWidth: 1,
-    backgroundColor: "white",
+    backgroundColor: "lightskyblue",
     justifyContent: "center",
     alignItems: "center",
   },
@@ -215,8 +221,8 @@ const styles = StyleSheet.create({
     padding: 30,
     position: "absolute",
     zIndex: 10,
-    top: "0%",
-    backgroundColor: "lightskyblue",
+    top: "40%",
+    backgroundColor: "gray",
     borderRadius: 15,
   },
   gameText: {
