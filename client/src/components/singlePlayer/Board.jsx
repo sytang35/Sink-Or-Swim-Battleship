@@ -87,9 +87,6 @@ export default function Board({ difficulty, mode }) {
         setBoard(JSON.parse(response));
       });
     }
-    if (board === null) {
-      setBoard(puzzle);
-    }
   };
 
   // Update state representing HIT or MISS
