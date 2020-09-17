@@ -1,3 +1,24 @@
+//import { StatusBar } from 'expo-status-bar';
+//import React from 'react';
+//import { StyleSheet, Text, View } from 'react-native';
+
+//export default function App() {
+//return (
+//<View style={styles.container}>
+//<Text>Open up App.js to start working on your app!</Text>
+//<StatusBar style="auto" />
+//</View>
+//);
+//}
+
+//const styles = StyleSheet.create({
+//container: {
+//flex: 1,
+//backgroundColor: '#fff',
+//alignItems: 'center',
+//justifyContent: 'center',
+//},
+//});
 import React from "react";
 import "react-native-gesture-handler";
 import {
@@ -13,7 +34,6 @@ import Difficulty from "./src/components/singlePlayer/Difficulty";
 import Game from "./src/components/singlePlayer/Game";
 
 import MultiModes from "./src/components/multiplayer/MultiModes";
-import Chat from "./src/components/multiplayer/Chat";
 import Rooms from "./src/components/multiplayer/fogMode/Rooms";
 import Multiplayer from "./src/components/multiplayer/classic/Game";
 import Fog from "./src/components/multiplayer/fogMode/Game";
@@ -29,7 +49,6 @@ export default function App() {
         <Stack.Screen name="SingleGame" component={Game} />
 
         <Stack.Screen name="MultiModes" component={MultiModes} />
-        <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Classic" component={Multiplayer} />
         <Stack.Screen name="Rooms" component={Rooms} />
         <Stack.Screen name="Fog" component={Fog} />

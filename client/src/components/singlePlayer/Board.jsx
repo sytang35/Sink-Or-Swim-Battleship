@@ -1,10 +1,9 @@
-import React, { useState, useCallback } from "react";
+import React, { useState } from "react";
 import { View, Text, StyleSheet, Button, Image } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import produce from "immer";
 import { puzzle } from "../../helper/puzzles";
 import AsyncStorage from "@react-native-community/async-storage";
-//import { useFocusEffect } from "@react-navigation/native";
 import PropTypes from "prop-types";
 
 Board.propTypes = {
@@ -181,7 +180,6 @@ export default function Board({ difficulty, mode }) {
         <Button
           onPress={() => {
             saveGame();
-            //AsyncStorage.setItem("game_state", JSON.stringify(board));
           }}
           title="Save"
         ></Button>
@@ -189,16 +187,6 @@ export default function Board({ difficulty, mode }) {
         <Button
           onPress={() => {
             loadGame();
-            //AsyncStorage.getItem("game_state")
-            //.then((response) => {
-            //if (response) {
-            //setBoard(JSON.parse(response));
-            //}
-            //return response;
-            //})
-            //.catch((error) => {
-            //console.log(error);
-            //});
           }}
           title="Load"
         ></Button>
