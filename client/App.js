@@ -13,7 +13,6 @@ import Difficulty from "./src/components/singlePlayer/Difficulty";
 import Game from "./src/components/singlePlayer/Game";
 
 import MultiModes from "./src/components/multiplayer/MultiModes";
-import Chat from "./src/components/multiplayer/Chat";
 import Rooms from "./src/components/multiplayer/fogMode/Rooms";
 import Multiplayer from "./src/components/multiplayer/classic/Game";
 import Fog from "./src/components/multiplayer/fogMode/Game";
@@ -29,7 +28,6 @@ export default function App() {
         <Stack.Screen name="SingleGame" component={Game} />
 
         <Stack.Screen name="MultiModes" component={MultiModes} />
-        <Stack.Screen name="Chat" component={Chat} />
         <Stack.Screen name="Classic" component={Multiplayer} />
         <Stack.Screen name="Rooms" component={Rooms} />
         <Stack.Screen name="Fog" component={Fog} />

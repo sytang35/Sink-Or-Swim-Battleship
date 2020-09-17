@@ -49,15 +49,6 @@ export default function MainMenu({ navigation }) {
       >
         <Text style={styles.text}>Multiplayer (Under Construction)</Text>
       </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback
-        style={styles.button}
-        onPress={() => {
-          navigation.navigate("Chat");
-        }}
-      >
-        <Text style={styles.text}>Chat (Under Construction)</Text>
-      </TouchableNativeFeedback>
     </View>
   );
 }
