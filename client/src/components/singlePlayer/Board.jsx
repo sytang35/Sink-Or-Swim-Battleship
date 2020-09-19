@@ -5,6 +5,7 @@ import produce from "immer";
 import { puzzle } from "../../helper/puzzles";
 import AsyncStorage from "@react-native-community/async-storage";
 import PropTypes from "prop-types";
+import GameEnd from "./GameEnd";
 
 Board.propTypes = {
   difficulty: PropTypes.array,
@@ -92,19 +93,7 @@ export default function Board({ difficulty, mode }) {
   // Update state representing HIT or MISS
   return (
     <View style={styles.screen}>
-      {end === true ? (
-        <View style={styles.gameWin}>
-          <Text style={styles.gameText}>You win</Text>
-        </View>
-      ) : null}
-      {end === false ? (
-        <View style={styles.gameOver}>
-          <Text style={styles.gameText}>Try again</Text>
-        </View>
-      ) : null}
-      <View
-        style={{ justifyContent: "space-evenly", flexDirection: "row" }}
-      ></View>
+      <GameEnd end={end} />
 
       <View style={styles.gridY}>
         {difficulty.map((row) => {
@@ -140,7 +129,6 @@ export default function Board({ difficulty, mode }) {
                     copyBoard[x][y] = board[x][y] ? null : "ship";
                   });
                   setBoard(newBoard);
-                  //AsyncStorage.setItem("game_state", JSON.stringify(newBoard));
                 }}
               >
                 {board[x][y] === "ship" ? (
@@ -238,25 +226,5 @@ const styles = StyleSheet.create({
     fontSize: 25,
     textAlign: "center",
     backgroundColor: "gray",
-  },
-  gameWin: {
-    padding: 30,
-    position: "absolute",
-    zIndex: 10,
-    top: "40%",
-    backgroundColor: "gray",
-    borderRadius: 15,
-  },
-  gameOver: {
-    padding: 30,
-    position: "absolute",
-    zIndex: 10,
-    top: "10%",
-    backgroundColor: "gray",
-    borderRadius: 15,
-  },
-  gameText: {
-    color: "white",
-    fontSize: 35,
   },
 });
