@@ -3,4 +3,5 @@ A simple variation of Battleship Solitaire and Multiplayer Battleship using Reac
 
 To run application, run `npm install` to have the required dependencies and then `npm start` or `expo start`. The app is currently being developed using an Android Emulator (Pixel 3a) and may vary on iOS.
 
-There will be continuous updates throughout the coming weeks. At the moment, the final game conditions and board set up are in development (lose condition and board x and y axes).
+Phase 1 of the application is complete, single player mode is ready for play.
+
