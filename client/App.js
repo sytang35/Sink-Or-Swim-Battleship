@@ -7,11 +7,6 @@ import MainMenu from "./src/components/MainMenu";
 import Difficulty from "./src/components/singlePlayer/Difficulty";
 import Game from "./src/components/singlePlayer/Game";
 
-import MultiModes from "./src/components/multiplayer/MultiModes";
-import Rooms from "./src/components/multiplayer/fogMode/Rooms";
-import Multiplayer from "./src/components/multiplayer/classic/Game";
-import Fog from "./src/components/multiplayer/fogMode/Game";
-
 const Stack = createStackNavigator();
 export default function App() {
   return (
@@ -21,11 +16,6 @@ export default function App() {
 
         <Stack.Screen name="Single Player" component={Difficulty} />
         <Stack.Screen name="SingleGame" component={Game} />
-
-        <Stack.Screen name="MultiModes" component={MultiModes} />
-        <Stack.Screen name="Classic" component={Multiplayer} />
-        <Stack.Screen name="Rooms" component={Rooms} />
-        <Stack.Screen name="Fog" component={Fog} />
       </Stack.Navigator>
     </NavigationContainer>
   );

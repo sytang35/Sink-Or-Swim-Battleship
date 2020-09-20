@@ -40,15 +40,6 @@ export default function MainMenu({ navigation }) {
       >
         <Text style={styles.text}>Single Player</Text>
       </TouchableNativeFeedback>
-
-      <TouchableNativeFeedback
-        style={styles.button}
-        onPress={() => {
-          navigation.navigate("MultiModes");
-        }}
-      >
-        <Text style={styles.text}>Multiplayer (Under Construction)</Text>
-      </TouchableNativeFeedback>
     </View>
   );
 }
