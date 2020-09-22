@@ -52,6 +52,7 @@ export default function Game() {
     setPlayer2(player2);
     endTurn(player1);
     // Send move at end of turn
+    // Currently returns [x, y] coordinates
   };
   const player2Attack = (position) => {
     player1.receiveAttack(position);

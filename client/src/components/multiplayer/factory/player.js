@@ -33,6 +33,7 @@ export default function Player(player) {
     );
     return game;
   }
+  // Auto set ship placement
   function placeShips() {
     setPiece(Ships("carrier"), [0, 0]);
     setPiece(Ships("battleship"), [1, 1]);
