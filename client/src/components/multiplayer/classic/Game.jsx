@@ -20,24 +20,20 @@ export default function Game() {
   const socket = io(url);
 
   useEffect(() => {
+    //setBoard1(player1.getBoard());
     socket.on("actuate", (move) => {
-      if (move.playerIndex === 1) {
-        //setBoard1(move.board);
+      if (move.playerIndex === 0) {
+        //player1Attack(move.position);
         setBoard1(player1.getBoard());
       } else {
-        //setBoard2(move.board);
         setBoard2(player2.getBoard());
       }
     });
   });
-  const sendRemoteMove = (board) => {
-    if (!player1) {
-      socket.emit("response", { board });
-    }
-  };
-  const handleRemote = (move) => {
-    const board = move.board;
-    setBoard2(board);
+  const sendRemoteMove = (position, board) => {
+    //if (!player1) {
+    socket.emit("actuate", { position, board });
+    //}
   };
 
   // Alternate turns
@@ -49,22 +45,21 @@ export default function Game() {
 
   const player1Attack = (position) => {
     player2.receiveAttack(position);
-    setPlayer2(player2);
     endTurn(player1);
     // Send move at end of turn
     // Currently returns [x, y] coordinates
   };
   const player2Attack = (position) => {
     player1.receiveAttack(position);
-    setPlayer1(player1);
     endTurn(player2);
   };
   const autoSet = () => {
     player1.placeShips();
-    player2.placeShips();
+    //player2.placeShips();
   };
   const start = () => {
     autoSet();
+    setBoard1(player1.getBoard());
     setGameOver(false);
   };
 
@@ -76,11 +71,11 @@ export default function Game() {
     <View style={styles.container}>
       <View style={styles.board}>
         <Text>Player1</Text>
-        <Board board={board1} player={player1.user} onPress={player2Attack} />
+        <Board board={board1} onPress={(() => player1Attack, sendRemoteMove)} />
       </View>
       <View style={styles.board}>
         <Text>Player2</Text>
-        <Board board={board2} player={player2.user} onPress={player1Attack} />
+        <Board board={board2} onPress={(() => player2Attack, sendRemoteMove)} />
       </View>
       <Button title="Start" onPress={start}></Button>
       <Button title="Restart" onPress={restart}></Button>

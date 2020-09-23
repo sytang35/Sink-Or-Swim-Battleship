@@ -12,7 +12,7 @@ Square.propTypes = {
 export default function Square({ position, gridVal, onPress }) {
   // onPress needs to pass position and handle the check
 
-  const isOccupied = gridVal.isEmpty === false ? true : null;
+  const isOccupied = gridVal.isEmpty ? false : true;
   const isSelected = gridVal.isSelected ? true : false;
 
   let value = "";
@@ -28,6 +28,8 @@ export default function Square({ position, gridVal, onPress }) {
     <TouchableNativeFeedback
       onPress={() => {
         onPress(position);
+        console.log(gridVal);
+        console.log(isSelected);
       }}
     >
       <View style={styles.square}>
@@ -49,11 +51,5 @@ const styles = StyleSheet.create({
     fontSize: 20,
     textAlign: "center",
     backgroundColor: "pink",
-  },
-  miss: {
-    width: 40,
-    height: 40,
-    fontSize: 25,
-    textAlign: "center",
   },
 });
