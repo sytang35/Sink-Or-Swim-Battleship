@@ -20,6 +20,8 @@ export default function Game() {
   const socket = io(url);
 
   useEffect(() => {
+    setBoard1(player1.getBoard());
+    setBoard2(player2.getBoard());
     socket.on("actuate", (move) => {
       if (move.playerIndex === 1) {
         //setBoard1(move.board);
