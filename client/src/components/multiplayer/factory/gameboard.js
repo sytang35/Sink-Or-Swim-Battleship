@@ -60,13 +60,11 @@ export default function Gameboard() {
 
       // Call sunk function to check if ship is sunk
       ship.isSunk();
-      console.log(board);
+
+      // Update selected square on board to show it was selected
+      square.isSelected = true;
     } else {
-      // Update square on board to show it was selected
-      board[row][col] = {
-        isEmpty: true,
-        isSelected: true,
-      };
+      square.isSelected = true;
     }
     return true;
   }

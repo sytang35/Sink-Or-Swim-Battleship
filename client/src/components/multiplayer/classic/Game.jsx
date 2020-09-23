@@ -20,7 +20,7 @@ export default function Game() {
   const socket = io(url);
 
   useEffect(() => {
-    //setBoard1(player1.getBoard());
+    setBoard1(player1.getBoard());
     socket.on("actuate", (move) => {
       if (move.playerIndex === 0) {
         //player1Attack(move.position);
@@ -44,7 +44,7 @@ export default function Game() {
   };
 
   const player1Attack = (position) => {
-    player2.receiveAttack(position);
+    player1.receiveAttack(position);
     endTurn(player1);
     // Send move at end of turn
     // Currently returns [x, y] coordinates
@@ -71,11 +71,19 @@ export default function Game() {
     <View style={styles.container}>
       <View style={styles.board}>
         <Text>Player1</Text>
-        <Board board={board1} onPress={(() => player1Attack, sendRemoteMove)} />
+        <Board
+          board={board1}
+          player={player1}
+          onPress={(() => player1Attack, sendRemoteMove)}
+        />
       </View>
       <View style={styles.board}>
         <Text>Player2</Text>
-        <Board board={board2} onPress={(() => player2Attack, sendRemoteMove)} />
+        <Board
+          board={board2}
+          player={player2}
+          onPress={(() => player2Attack, sendRemoteMove)}
+        />
       </View>
       <Button title="Start" onPress={start}></Button>
       <Button title="Restart" onPress={restart}></Button>

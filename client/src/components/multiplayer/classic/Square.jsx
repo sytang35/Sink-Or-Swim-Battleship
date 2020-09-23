@@ -12,8 +12,8 @@ Square.propTypes = {
 export default function Square({ position, gridVal, onPress }) {
   // onPress needs to pass position and handle the check
 
-  const isOccupied = gridVal.isEmpty ? false : true;
-  const isSelected = gridVal.isSelected ? true : false;
+  const isOccupied = gridVal.isEmpty === false ? true : null;
+  const isSelected = gridVal.isSelected === true ? true : false;
 
   let value = "";
   if (isSelected) {

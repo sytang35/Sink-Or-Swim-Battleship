@@ -31,7 +31,7 @@ test("Hit opposing player", () => {
   p1.setPiece(ship1, [0, 0]);
 
   p2.fire(p1, [0, 0]);
-  p1, [0, 0];
+  //p1, [0, 0];
 
   expect(p1.getShipStatus([0, 0]).getPosition()).toEqual([true, null, null]);
 });
@@ -73,4 +73,18 @@ test("Set ships when player initiated", () => {
   p1.placeShips();
 
   expect(p1.getBoard()).toEqual(player.getBoard());
+});
+
+// Just to quickly test if the isSelected value updates
+test("Miss but square updates to selected", () => {
+  const p1 = Player("p1");
+  const p2 = Player("p2");
+  p1.placeShips();
+
+  p2.fire(p1, [9, 9]);
+
+  expect(p1.getBoard([5, 5])).toMatchObject({
+    isSelected: true,
+    isEmpty: false,
+  });
 });

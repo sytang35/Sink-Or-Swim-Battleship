@@ -4,7 +4,7 @@ import Square from "./Square";
 import PropTypes from "prop-types";
 
 Board.propTypes = {
-  player: PropTypes.string,
+  player: PropTypes.object,
   board: PropTypes.array,
   turn: PropTypes.bool,
   onPress: PropTypes.func,
