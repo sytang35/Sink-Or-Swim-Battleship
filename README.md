@@ -7,7 +7,7 @@ Alternatively, you can install the Expo app from the Google Playstore and scan t
 - [x] Phase 1 of the application is complete, single player mode is ready for play.
 - [ ] Work on Multiplayer Mode utilizing the Socket.io library
 
-#Game Instructions and Notes:
+# Game Instructions and Notes:
 
 **Note:** Initially I wanted to develop this app using TypeScript but learning both React Native and TS in about 10 days seemed like I was biting off more than I could chew so I opted to use the PropTypes library to get a small taste of using type checking by applying it to the props.
 
