@@ -24,7 +24,7 @@ In the puzzle/game screen, there are four buttons below which provide different 
 3. Save allows the player to save the current progress using React Native's AsyncStorage
 4. Load also uses AsyncStorage to get the state that was set to bring the last saved game state.
 
-Game Demo images below is approximately what you can expect to see.
+## Game Demo images below is approximately what you can expect to see.
 
 ![Image of Main Screen](./demo-images/GameDemo1.png)
 
