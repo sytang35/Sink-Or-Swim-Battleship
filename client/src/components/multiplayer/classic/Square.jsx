@@ -29,7 +29,6 @@ export default function Square({ position, gridVal, onPress }) {
       onPress={() => {
         onPress(position);
         console.log(gridVal);
-        console.log(isSelected);
       }}
     >
       <View style={styles.square}>

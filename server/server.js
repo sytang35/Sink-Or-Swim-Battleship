@@ -28,10 +28,11 @@ io.on("connection", (socket) => {
 
   // Handling player moves
   socket.on("actuate", (data) => {
-    const { position } = data;
+    const { player, position } = data;
 
     const move = {
       playerIndex,
+      player,
       position,
     };
 

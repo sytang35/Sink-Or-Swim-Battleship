@@ -17,22 +17,27 @@ export default function Game() {
   //const [ship, setShip] = useState(false);
   const [gameOver, setGameOver] = useState(false);
   // Socket handlers
-  const socket = io(url);
+  const socket = io("http://192.168.100.113:3000");
+  //const socket = io("exp://8f-c5j.sytang35.client.exp.direct:80");
 
+  // Might need to assign player index to a board/player
   useEffect(() => {
-    setBoard1(player1.getBoard());
+    //setBoard1(player1.getBoard());
+    //setBoard2(player2.getBoard());
     socket.on("actuate", (move) => {
-      if (move.playerIndex === 0) {
+      if (move.player === 1) {
         //player1Attack(move.position);
+        player1Attack(move.position);
         setBoard1(player1.getBoard());
       } else {
+        player2Attack(move.position);
         setBoard2(player2.getBoard());
       }
     });
   });
-  const sendRemoteMove = (position, board) => {
+  const sendRemoteMove = (player, position) => {
     //if (!player1) {
-    socket.emit("actuate", { position, board });
+    socket.emit("actuate", { player, position });
     //}
   };
 
@@ -47,11 +52,15 @@ export default function Game() {
     player1.receiveAttack(position);
     endTurn(player1);
     // Send move at end of turn
-    // Currently returns [x, y] coordinates
+    let player = 1;
+    sendRemoteMove(player, position);
   };
   const player2Attack = (position) => {
-    player1.receiveAttack(position);
+    player2.receiveAttack(position);
     endTurn(player2);
+
+    let player = 2;
+    sendRemoteMove(player, position);
   };
   const autoSet = () => {
     player1.placeShips();
@@ -71,19 +80,11 @@ export default function Game() {
     <View style={styles.container}>
       <View style={styles.board}>
         <Text>Player1</Text>
-        <Board
-          board={board1}
-          player={player1}
-          onPress={(() => player1Attack, sendRemoteMove)}
-        />
+        <Board board={board1} player={player1} onPress={player1Attack} />
       </View>
       <View style={styles.board}>
         <Text>Player2</Text>
-        <Board
-          board={board2}
-          player={player2}
-          onPress={(() => player2Attack, sendRemoteMove)}
-        />
+        <Board board={board2} player={player2} onPress={player2Attack} />
       </View>
       <Button title="Start" onPress={start}></Button>
       <Button title="Restart" onPress={restart}></Button>
