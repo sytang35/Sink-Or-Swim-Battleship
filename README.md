@@ -4,12 +4,12 @@ A simple variation of Battleship Solitaire and Multiplayer Battleship using Reac
 To run application, run `npm install` to have the required dependencies and then `npm start` or `expo start`. The app is currently being developed using an Android Emulator (Pixel 3a) and may vary on devices.
 Alternatively, you can install the Expo app from the Google Playstore and scan the QR code provided when you start the app using the instructions in the line above.
 
-Phase 1 of the application is complete, single player mode is ready for play.
-Next Steps: Work on Multiplayer Mode utilizing the Socket.io library
+- [x] Phase 1 of the application is complete, single player mode is ready for play.
+- [ ] Work on Multiplayer Mode utilizing the Socket.io library
 
-Game Instructions and Notes:
+#Game Instructions and Notes:
 
-Note: Initially I wanted to develop this app using TypeScript but learning both React Native and TS in about 10 days seemed like I was biting off more than I could chew so I opted to use the PropTypes library to get a small taste of using type checking by applying it to the props.
+**Note:** Initially I wanted to develop this app using TypeScript but learning both React Native and TS in about 10 days seemed like I was biting off more than I could chew so I opted to use the PropTypes library to get a small taste of using type checking by applying it to the props.
 
 Once the app has loaded, you can select the "Single Player" game mode which then presents the player with three modes of difficulty to choose from
 
