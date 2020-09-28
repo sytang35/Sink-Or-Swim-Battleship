@@ -2,6 +2,7 @@ import React from "react";
 import { View, Text, StyleSheet } from "react-native";
 import { TouchableNativeFeedback } from "react-native-gesture-handler";
 import PropTypes from "prop-types";
+import io from "socket.io-client";
 
 Square.propTypes = {
   position: PropTypes.array,
@@ -29,6 +30,7 @@ export default function Square({ position, gridVal, onPress }) {
       onPress={() => {
         onPress(position);
         console.log(gridVal);
+        // console.log(position);
       }}
     >
       <View style={styles.square}>
