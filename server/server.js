@@ -74,24 +74,28 @@ io.on("connection", (socket) => {
   socket.on("actuate", (data) => {
     const { player, position } = data;
 
-    console.log(data.player);
-    console.log(data.position);
-    let board;
-    if (player === 0) {
-      player1.receiveAttack(position);
-      board = player1.getBoard();
-    } else if (player === 1) {
-      player2.receiveAttack(position);
-      board = player2.getBoard();
+    if (player === undefined) return;
+    if (player == 0) {
+      console.log(player);
+      console.log(position);
+      console.log(data);
+      let board;
+      if (player === 0) {
+        player1.receiveAttack(position.position);
+        board = player1.getBoard();
+      } else if (player === 1) {
+        player2.receiveAttack(position);
+        board = player2.getBoard();
+      }
+
+      const move = {
+        player,
+        board,
+      };
+
+      console.log("move", board);
+      socket.broadcast.emit("move", move);
     }
-
-    const move = {
-      player,
-      board,
-    };
-
-    console.log("move", board);
-    socket.broadcast.emit("move", move);
   });
 
   // When player disconnects

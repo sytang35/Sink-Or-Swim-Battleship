@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import io from "socket.io-client";
 import { View, StyleSheet, Button, Text } from "react-native";
 import Board from "./Board";
@@ -12,11 +12,12 @@ export default function Game() {
   const [board1, setBoard1] = useState([]);
   const [board2, setBoard2] = useState([]);
   // const [board, setBoard] = useState([]);
+  const coord = useRef(true);
+  const playerIndex = useRef(true);
 
   // Currently using preset placement
   const [gameOver, setGameOver] = useState(false);
   // Socket handlers
-  //const socket = io("exp://8f-c5j.sytang35.client.exp.direct:80");
   const socket = io("http://192.168.0.39:3000");
   let playerNum = 0;
 
@@ -39,6 +40,31 @@ export default function Game() {
         setTurn("Player 2 turn");
       }
     });
+  });
+
+  useEffect(() => {
+    if (playerIndex.current === true || coord.current === true) {
+      playerIndex.current === false;
+      coord.current = false;
+    } else {
+      socket.emit("actuate", { player: playerIndex.current, position: coord });
+      console.log("coordinates", coord);
+
+      socket.on("move", (move) => {
+        if (move) {
+          console.log(move.player);
+          if (move.player === 0) {
+            setBoard2(move.board);
+          } else {
+            setBoard1(move.board);
+          }
+        } else {
+          console.log("waiting for move");
+        }
+        coord.current = false;
+        console.log("False?", coord);
+      });
+    }
   });
 
   const players = () => {
@@ -72,30 +98,12 @@ export default function Game() {
     setTurn(next);
   };
 
-  const sendAttack = (position) => {
-    if (position) socket.emit("actuate", { player: 0, position: position });
-  };
-
   const player1Attack = (position) => {
-    // console.log(position);
-    // sendAttack(position);
     if (position) {
-      socket.emit("actuate", { player: 0, position: position });
-      console.log("sent");
+      playerIndex.current = 0;
+      coord.current = position;
+      // console.log(coord.current);
     }
-    socket.on("move", (move) => {
-      if (move) {
-        console.log(move.player);
-        if (move.player === 0) {
-          setBoard2(move.board);
-        } else {
-          setBoard1(move.board);
-        }
-      } else {
-        console.log("waiting for move");
-      }
-    });
-    return position;
   };
   const player2Attack = (position) => {
     socket.emit("actuate", { player: 1, position: position });
