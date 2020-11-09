@@ -5,7 +5,6 @@ To run application, run `npm install` to have the required dependencies and then
 Alternatively, you can install the Expo app from the Google Playstore and scan the QR code provided when you start the app using the instructions in the line above.
 
 - [x] Phase 1 of the application is complete, single player mode is ready for play.
-- [ ] Work on Multiplayer Mode utilizing the Socket.io library
 
 # Game Instructions and Notes:
 
