@@ -1,7 +1,7 @@
 # Sink-Or-Swim-Battleship
 A simple variation of Battleship Solitaire and Multiplayer Battleship using React Native and React Hooks.
 
-To run application, run `npm install` to have the required dependencies and then `npm start` or `expo start`. You will also need either an Android device or an emulator using Android Studio. The app is was developed using an Android Emulator (Pixel 3a) and may vary on devices.
+To run application, run `npm install` to have the required dependencies and then `npm start` or `expo start`. You will also need either an Android device or an emulator using Android Studio. The app is was developed using an Android Emulator (Pixel 3a XL) and may vary on devices.
 Alternatively, you can install the Expo app from the Google Playstore and scan the QR code provided when you start the app using the instructions in the line above.
 
 # Game Instructions and Notes:
